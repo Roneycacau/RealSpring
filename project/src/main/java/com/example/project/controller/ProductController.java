@@ -1,7 +1,6 @@
 package com.example.project.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.example.project.domain.Product;
 import com.example.project.service.ProductService;
@@ -30,7 +29,7 @@ public class ProductController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Optional<Product>> getById(@PathVariable Integer id) {
+	public ResponseEntity<Product> getById(@PathVariable Integer id) {
 		return ResponseEntity.ok(productService.findById(id));
 	}
 
@@ -38,4 +37,10 @@ public class ProductController {
 	public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file, @PathVariable Integer id) {
 		return new ResponseEntity<>(productService.upload(file, id), HttpStatus.OK);
 	}
+
+	// @PutMapping(value = "/id")
+	// public ResponseEntity<Product> update(@RequestBody ProductRequestCreate
+	// product, @PathVariable Integer id) {
+	// return ResponseEntity.ok(productService.updateProduct(product, id));
+	// }
 }

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.example.project.domain.Product;
+import com.example.project.domain.exception.DataNotFoundException;
 import com.example.project.repository.ProductRepository;
 
 import org.apache.commons.io.FileUtils;
@@ -23,13 +24,14 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> findById(Integer id) {
+    public Product findById(Integer id) {
         Optional<Product> status = productRepository.findById(id);
-        return status;
+        return status.orElseThrow(() -> new DataNotFoundException("Evento não encontrado"));
+
     }
 
     public String upload(MultipartFile file, Integer id) {
-        String dirName = File.separator + "temp";
+        String dirName = File.separator + "temp" + File.separator + id;
         File dir = new File(dirName);
 
         if (!dir.exists())
@@ -42,7 +44,16 @@ public class ProductService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return destFile.getName();
+        Product product = this.findById(id);
+        product.setProductImage(dirName + File.separator + filename);
+        productRepository.save(product);
+        // return destFile.getName();
+        return destFile.getAbsolutePath();
     }
+
+    // public Product updateProduct(ProductRequestCreate product, Integer id) {
+    // Product currentProduct = this.findById(id);
+
+    // return null;
+    // }
 }
