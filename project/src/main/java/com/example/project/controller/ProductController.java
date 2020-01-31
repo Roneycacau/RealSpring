@@ -45,7 +45,6 @@ public class ProductController {
 	public ResponseEntity<String> xlsxToDb() {
 		// Product entity = new Product();
 		// productService.saveBatch(entity);
-
 		return ResponseEntity.ok(read.read());
 	}
 
