@@ -45,8 +45,8 @@ public class ProductController {
 	public ResponseEntity<String> xlsxToDb() {
 		// Product entity = new Product();
 		// productService.saveBatch(entity);
-		read.read();
-		return ResponseEntity.ok("FOI DISGRAÇA");
+
+		return ResponseEntity.ok(read.read());
 	}
 
 	// @PutMapping(value = "/id")
