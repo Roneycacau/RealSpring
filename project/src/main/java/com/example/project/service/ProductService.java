@@ -47,8 +47,11 @@ public class ProductService {
         Product product = this.findById(id);
         product.setProductImage(dirName + File.separator + filename);
         productRepository.save(product);
-        // return destFile.getName();
         return destFile.getAbsolutePath();
+    }
+
+    public void saveBatch(Product entity) {
+        productRepository.save(entity);
     }
 
     // public Product updateProduct(ProductRequestCreate product, Integer id) {

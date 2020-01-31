@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.project.domain.Product;
 import com.example.project.service.ProductService;
+import com.example.project.service.ReadExcelService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,8 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private ReadExcelService read;
 
 	@GetMapping(value = "/list")
 	public ResponseEntity<List<Product>> list() {
@@ -36,6 +39,14 @@ public class ProductController {
 	@PostMapping(value = "/upload/{id}")
 	public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file, @PathVariable Integer id) {
 		return new ResponseEntity<>(productService.upload(file, id), HttpStatus.OK);
+	}
+
+	@PostMapping(value = "xlsx_to_db")
+	public ResponseEntity<String> xlsxToDb() {
+		// Product entity = new Product();
+		// productService.saveBatch(entity);
+		read.read();
+		return ResponseEntity.ok("FOI DISGRAÇA");
 	}
 
 	// @PutMapping(value = "/id")
